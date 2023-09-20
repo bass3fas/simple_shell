@@ -8,6 +8,7 @@ int main(void)
 	while (1)
 	{
 		pid_t child_pid;
+		int status;
 
 		child_pid = fork();
 		if (child_pid == -1)
@@ -29,11 +30,16 @@ int main(void)
 			if (nread == -1)
 			{
 				printf("Exit..\n");
-				return (-1);
+				free(lineptr);
+				exit(EXIT_SUCCESS);
 			}
 			lineptr_cp = malloc(sizeof(char) * nread);
 			if (lineptr_cp == NULL)
-				return (-1);
+			{
+				perror("malloc");
+				free(lineptr_cp);
+				exit(EXIT_FAILURE);
+			}
 			strcpy(lineptr_cp, lineptr);
 			word = strtok(lineptr, dm);
 			for (nword = 1; word != NULL; nword++)
@@ -54,10 +60,10 @@ int main(void)
 			free(words);
 			free(lineptr);
 			free(lineptr_cp);
-			return (0);
 
 		}
-		return (0);
+		else
+			wait(&status);
 	}
 	return (0);
 }
