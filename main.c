@@ -27,7 +27,7 @@ int main(void)
 
 			printf("shell $ ");
 			nread = getline(&lineptr, &n, stdin);
-			if (nread == -1)
+			if (nread == -1 || nread == 0)
 			{
 				printf("Exit..\n");
 				free(lineptr);
@@ -64,6 +64,8 @@ int main(void)
 		}
 		else
 			wait(&status);
+		if (WIFEXITED(status) && WEXITSTATUS(status) == EXIT_SUCCESS)
+			break;
 	}
 	return (0);
 }
