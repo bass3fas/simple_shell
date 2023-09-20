@@ -10,7 +10,7 @@
 #include <sys/stat.h>
 #include <sys/wait.h>
 void exec(char **words);
-char *get_path( char *command);
+char *get_path(char *command);
 char **words_div(char *lineptr, ssize_t nread);
 
 #endif
