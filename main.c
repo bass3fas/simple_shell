@@ -22,11 +22,11 @@ int main(void)
 			size_t n = 0;
 			ssize_t nread;
 
-			printf("shell $ ");
+			printf("#shell$ ");
 			nread = getline(&lineptr, &n, stdin);
 			if (nread == -1)
 			{
-				printf("Exit..\n");
+				printf("\n");
 				free(lineptr);
 				exit(EXIT_FAILURE);
 			}
