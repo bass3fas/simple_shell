@@ -1,8 +1,8 @@
-#Authors ✒️
+# Authors ✒️
 
-##Bassant Aboelhassan
+## Bassant Aboelhassan
 
-###Simple Shell 
+### Simple Shell 
 
 A simple UNIX command interpreter used as part of ALX's low-level programming and algorithm track.
 
