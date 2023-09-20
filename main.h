@@ -11,7 +11,6 @@
 #include <sys/wait.h>
 void exec(char **words);
 char *get_path( char *command);
-char **div_words(int nword, char *dm, char *line_ptr, char *lineptr_cp);
-
+char **words_div(char *lineptr, ssize_t nread);
 
 #endif

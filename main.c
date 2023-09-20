@@ -18,12 +18,9 @@ int main(void)
 		}
 		if (child_pid == 0)
 		{
-			char *lineptr = NULL, *lineptr_cp = NULL;
-			char *word, **words;
+			char *lineptr = NULL, **words;
 			size_t n = 0;
 			ssize_t nread;
-			const char *dm = " \n";
-			int nword, i;
 
 			printf("shell $ ");
 			nread = getline(&lineptr, &n, stdin);
@@ -33,33 +30,13 @@ int main(void)
 				free(lineptr);
 				exit(EXIT_SUCCESS);
 			}
-			lineptr_cp = malloc(sizeof(char) * nread);
-			if (lineptr_cp == NULL)
-			{
-				perror("malloc");
-				free(lineptr_cp);
-				exit(EXIT_FAILURE);
-			}
-			strcpy(lineptr_cp, lineptr);
-			word = strtok(lineptr, dm);
-			for (nword = 1; word != NULL; nword++)
-				word = strtok(NULL, dm);
-			words = malloc(sizeof(char *) * (nword + 1));
-			word = strtok(lineptr_cp, dm);
-			for (i = 0; word != NULL; i++)
-			{
-				words[i] = malloc(sizeof(char) * strlen(word));
-				strcpy(words[i], word);
-				word = strtok(NULL, dm);
-			}
-			words[i] = NULL;
 
+			words = words_div(lineptr, nread);
 			exec(words);
 
 
 			free(words);
 			free(lineptr);
-			free(lineptr_cp);
 
 		}
 		else

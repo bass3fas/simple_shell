@@ -14,4 +14,6 @@ void exec(char **words)
 		if (execve(real_command, words, NULL) == -1)
 			perror("Error:");
 	}
+	else
+		exit(EXIT_FAILURE);
 }
