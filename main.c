@@ -5,41 +5,59 @@
  */
 int main(void)
 {
-	char *lineptr = NULL, *lineptr_cp = NULL, *word, **words;
-	size_t n = 0;
-	ssize_t nread;
-	const char *dm = " \n";
-	int nword, i;
+	while (1)
+	{
+		pid_t child_pid;
 
-
-		printf("shell $ ");
-		nread = getline(&lineptr, &n, stdin);
-		lineptr_cp = malloc(sizeof(char) * nread);
-		if (lineptr_cp == NULL)
-			return (-1);
-		strcpy(lineptr_cp, lineptr);
-		if (nread == -1)
-			return (-1);
-
-		word = strtok(lineptr, dm);
-		for (nword = 1; word != NULL; nword++)
-			word = strtok(NULL, dm);
-		words = malloc(sizeof(char *) * (nword + 1));
-		word = strtok(lineptr_cp, dm);
-		for (i = 0; word != NULL; i++)
+		child_pid = fork();
+		if (child_pid == -1)
 		{
-			words[i] = malloc(sizeof(char) * strlen(word));
-			strcpy(words[i], word);
-			word = strtok(NULL, dm);
+			perror("fork");
+			exit(EXIT_FAILURE);
 		}
-		words[i] = NULL;
+		if (child_pid == 0)
+		{
+			char *lineptr = NULL, *lineptr_cp = NULL;
+			char *word, **words;
+			size_t n = 0;
+			ssize_t nread;
+			const char *dm = " \n";
+			int nword, i;
 
-		exec(words);
+			printf("shell $ ");
+			nread = getline(&lineptr, &n, stdin);
+			if (nread == -1)
+			{
+				printf("Exit..\n");
+				return (-1);
+			}
+			lineptr_cp = malloc(sizeof(char) * nread);
+			if (lineptr_cp == NULL)
+				return (-1);
+			strcpy(lineptr_cp, lineptr);
+			word = strtok(lineptr, dm);
+			for (nword = 1; word != NULL; nword++)
+				word = strtok(NULL, dm);
+			words = malloc(sizeof(char *) * (nword + 1));
+			word = strtok(lineptr_cp, dm);
+			for (i = 0; word != NULL; i++)
+			{
+				words[i] = malloc(sizeof(char) * strlen(word));
+				strcpy(words[i], word);
+				word = strtok(NULL, dm);
+			}
+			words[i] = NULL;
+
+			exec(words);
 
 
-		free(words);
-		free(lineptr);
-		free(lineptr_cp);
+			free(words);
+			free(lineptr);
+			free(lineptr_cp);
+			return (0);
 
-return (0);
+		}
+		return (0);
+	}
+	return (0);
 }
