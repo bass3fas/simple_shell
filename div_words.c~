@@ -1,0 +1,26 @@
+#include "main.h"
+/**
+ * div_words - divide the line into words
+ * @nword: no of words
+ * @dm: delimiter
+ * @line_ptr: the full line to divide
+ * Retrun: all words
+ */
+char **div_words(int nword, char *dm, char *line_ptr)
+{
+	char **words, *word;
+
+	word = strtok(lineptr, dm);
+	for (nword = 1; word != NULL; nword++)
+		word = strtok(NULL, dm);
+	words = malloc(sizeof(char *) * (nword + 1));
+	word = strtok(lineptr_cp, dm);
+	for (i = 0; word != NULL; i++)
+	{
+		words[i] = malloc(sizeof(char) * strlen(word));
+		strcpy(words[i], word);
+		word = strtok(NULL, dm);
+	}
+	words[i] = NULL;
+	return (words);
+}
