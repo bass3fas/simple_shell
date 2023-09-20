@@ -24,11 +24,11 @@ int main(void)
 
 			printf("shell $ ");
 			nread = getline(&lineptr, &n, stdin);
-			if (nread == -1 || nread == 0)
+			if (nread == -1)
 			{
 				printf("Exit..\n");
 				free(lineptr);
-				exit(EXIT_SUCCESS);
+				exit(EXIT_FAILURE);
 			}
 
 			words = words_div(lineptr, nread);
@@ -41,7 +41,7 @@ int main(void)
 		}
 		else
 			wait(&status);
-		if (WIFEXITED(status) && WEXITSTATUS(status) == EXIT_SUCCESS)
+		if (WIFEXITED(status) && WEXITSTATUS(status) == EXIT_FAILURE)
 			break;
 	}
 	return (0);
