@@ -3,7 +3,7 @@
  * words_div - executing the command passed
  * @lineptr: line read from prompt
  * @nread: status of line read
- * Rerurn: words of the line
+ * Return: words of the line
  */
 char **words_div(char *lineptr, ssize_t nread)
 {
