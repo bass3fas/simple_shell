@@ -6,12 +6,10 @@
  */
 void prompt(char **av, char **env)
 {
-	char *lineptr = NULL;
-	size_t n =0;
-	int i = 0, status;
+	char *lineptr = NULL, **argv = NULL, *command = NULL;
+	size_t n = 0;
+	int status;
 	ssize_t num_char;
-	char **argv = NULL;
-	char *command = NULL;
 	pid_t child_pid;
 
 	while (1)
@@ -24,12 +22,6 @@ void prompt(char **av, char **env)
 			printf("\n");
 			exit(EXIT_FAILURE);
 		}
-		while (lineptr[i])
-		{
-			if (lineptr[i] == '\n')
-				lineptr[i] = 0;
-			i++;
-			}
 		argv = words(lineptr, num_char);
 		command = get_path(argv[0]);
 		child_pid = fork();
