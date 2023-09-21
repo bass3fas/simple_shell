@@ -1,12 +1,14 @@
 #include "main.h"
 /**
- * words_div - executing the command passed
+ * words - executing the command passed
+ * @lineptr: line read from prompt
+ * @nread: status of line read
+ * Return: words of the line
  */
-char **words_div(char *lineptr, ssize_t nread)
+char **words(char *lineptr, ssize_t nread)
 {
 	char *lineptr_cp = NULL;
 	char *word, **words;
-	size_t n = 0;
 	const char *dm = " \n";
 	int nword, i;
 
@@ -29,5 +31,6 @@ char **words_div(char *lineptr, ssize_t nread)
 		word = strtok(NULL, dm);
 	}
 	words[i] = NULL;
+	free(lineptr_cp);
 	return (words);
 }
